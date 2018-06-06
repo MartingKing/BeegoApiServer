@@ -9,13 +9,17 @@ package routers
 
 import (
 	"CrowerApi/controllers"
-
 	"github.com/astaxie/beego"
 )
 
 func init() {
-	ns := beego.NewNamespace("/v1",
-		beego.NSInclude(&controllers.CityController{}),
+	ns := beego.NewNamespace("/test",
+		beego.NSNamespace("/city",
+			beego.NSInclude(&controllers.CityController{}),
+		),
+		beego.NSNamespace("/duanzi",
+			beego.NSInclude(&controllers.DuanziController{}),
+		),
 	)
 	beego.AddNamespace(ns)
 }

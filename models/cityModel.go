@@ -3,11 +3,12 @@ package models
 import (
 	_ "github.com/go-sql-driver/mysql" //初始化数据库
 	"github.com/astaxie/beego/orm"
-	"DHDApi/crawer"
+	"CrowerApi/crawer"
 	"database/sql"
 	"fmt"
 	"log"
 	"strconv"
+	"CrowerApi/utils"
 )
 
 type CityList struct {
@@ -16,22 +17,16 @@ type CityList struct {
 	Cityurl  string `json:"cityurl,omitemty"`
 }
 
-const (
-	aliasName  = "default"
-	driverName = "mysql"
-	dataSource = "root:huadong4305@tcp(127.0.0.1:3306)/test?charset=utf8"
-)
-
 func init() {
+	orm.ResetModelCache()
 	orm.RegisterModel(new(CityList))
-	ConnectSql()
+	utils.ConnectSql()
 }
 
 //数据库插入city的信息
-func AddCity() []CityList {
-	var citylist []CityList
+func AddCity(){
 	matchesitem := crawer.Start()
-	db, err := sql.Open(driverName, dataSource)
+	db, err := sql.Open(utils.DriverName, utils.DataSource)
 	if err != nil {
 		panic(err)
 	}
@@ -51,8 +46,6 @@ func AddCity() []CityList {
 			fmt.Println("insert success,city id:", id)
 		}
 	}
-	orm.NewOrm().Raw("select * from citylist").QueryRows(&citylist)
-	return citylist
 }
 
 func DeleteCity(uid string) {
@@ -91,9 +84,4 @@ func GetPageCitys(pagecount string) []CityList {
 	sq := qb.String()
 	orm.NewOrm().Raw(sq).QueryRows(&cl)
 	return cl
-}
-
-func ConnectSql() {
-	orm.RegisterDataBase(aliasName, driverName, dataSource, 30)
-	orm.RunSyncdb(aliasName, false, true)
 }

@@ -1,5 +1,7 @@
 package utils
 
+import "strings"
+
 //获取“=”号的索引
 func Substring(str string) int {
 	var index int
@@ -14,7 +16,8 @@ func Substring(str string) int {
 
 func GetCityid(str string) string {
 	rs := []rune(str)
-	start := Substring(str) + 1
+	//start := Substring(str) + 1
+	start := strings.Index(str, "=") + 1
 	end := len(str)
 	length := len(rs)
 

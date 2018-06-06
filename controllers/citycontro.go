@@ -30,8 +30,8 @@ func (this *CityController) GetPageCity() {
 func (this *CityController) GetCity() {
 	uid := this.GetString(":cityid")
 	id := utils.GetCityid(uid)
-	city := models.GetCityById(string(id))
-	this.Data["json"] = &city
+	cites := models.GetCityById(string(id))
+	this.Data["json"] = &cites
 	this.ServeJSON()
 }
 

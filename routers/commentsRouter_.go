@@ -31,4 +31,12 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
+	beego.GlobalControllerRouter["CrowerApi/controllers:DuanziController"] = append(beego.GlobalControllerRouter["CrowerApi/controllers:DuanziController"],
+		beego.ControllerComments{
+			Method: "GetAllDuanzi",
+			Router: `/getallduanzi`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 }
